@@ -68,8 +68,8 @@ Returns a validated JSON Upwork profile:
 
 ## 📸 Streamlit Output Example
 
-![Streamlit Screenshot](.ss1.png)
-![Streamlit Screenshot](.ss2.png)
+![Streamlit Screenshot](ss1.png)
+![Streamlit Screenshot](ss2.png)
 
 ---
 
