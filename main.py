@@ -12,9 +12,10 @@ def main():
     role = "Python Developer"
     experience = "2 years"
     skills = ["Selenium", "Web Scraping", "Automation"]
-    rate = "$15/hr"
+    rate = "$15/hr",
+    tone = "Professional"
 
-    raw_output = run_profile_agent(role, experience, skills, rate)
+    raw_output = run_profile_agent(role, experience, skills, rate, tone)
     cleaned_output = extract_json(raw_output)
 
     if not cleaned_output:
