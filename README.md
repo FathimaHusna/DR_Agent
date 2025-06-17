@@ -15,23 +15,7 @@ This project generates high-quality, enriched Upwork freelancer profiles using r
 
 ## 📁 Folder Structure
 
-dr_agent/
-├── .env # Gemini API Key
-├── agent.py # Core Gemini logic
-├── cache/
-│ └── ddg_cache.json # Cached profile links + scraped content
-├── enrichment.py # Builds enrichment context from content
-├── evaluation.py # Calculates keyword coverage
-├── main.py # CLI entry point
-├── prompts.py # Gemini prompt builder
-├── requirements.txt
-├── schema.py # Profile data model (Pydantic)
-├── scraper.py # DDG search and content simulation
-├── streamlit_app.py # Streamlit interface
-├── test_main.py # Profile test validation
-├── utils.py # Cache I/O
-└── validation.py # Input validation logic
-
+![alt text](image.png)
 
 ---
 
@@ -73,12 +57,10 @@ streamlit run streamlit_app.py
 
     ✅ Sample Output
 
-    ## 📸 Screenshots
-### 🔧 Streamlit UI – Main Page
-![Main Page](ss1_p2.png)
+## 📸 Screenshots
+![Phase 2 Streamlit Output](screenshots/ss1_p2.png)
 
-### ✅ Generated Profile Output
-![Profile Output](ss2_p2.png)
+![Phase 2 Streamlit Output](screenshots/ss2_p2.png)
 
 
     
