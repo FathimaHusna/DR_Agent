@@ -59,12 +59,11 @@ streamlit run streamlit_app.py
 
 ## 📸 Screenshots
 
-![Phase 2 - Profile Generation](output/ss1_p2.png)
-![Phase 2 - Keyword Evaluation](output/ss2_p2.png)
+![Phase 2 - Profile Generation](../DR_Agent/output/ss1_p2.png)
+![Phase 2 - Keyword Evaluation](../DR_Agent/output/ss2_p2.png)
 
 
 
-    
    
 
 
