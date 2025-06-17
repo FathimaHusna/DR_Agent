@@ -58,9 +58,9 @@ streamlit run streamlit_app.py
     ✅ Sample Output
 
 ## 📸 Screenshots
-![Phase 2 Streamlit Output](screenshots/ss1_p2.png)
+![alt text](image-1.png)
 
-![Phase 2 Streamlit Output](screenshots/ss2_p2.png)
+![alt text](image-2.png)
 
 
     
