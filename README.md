@@ -1,86 +1,108 @@
-# 🧠 Deep Research Agent (Phase 1) – Upwork Profile Generator
+# 🧠 DR Agent – AI-Powered Upwork Profile Generator (Phase 2)
 
-This is the Phase 1 implementation of a Deep Research Agent project, focused on generating optimized Upwork profiles using LLMs like Google Gemini.
+This project generates high-quality, enriched Upwork freelancer profiles using real-world scraped content and Google Gemini AI.
+
+## ✅ Phase 2 Highlights
+
+- 🔍 **DuckDuckGo-based Upwork profile search** with caching  
+- ✨ **Dynamic enrichment** using real content (no hardcoded keywords)  
+- 🤖 **Gemini-powered profile generation** using context-driven prompts  
+- 📊 **Evaluation of keyword coverage and enrichment**  
+- 🧪 **Unit tests and input validation**  
+- 🌐 **Streamlit UI for live testing and feedback**
 
 ---
 
-## 📁 Project Structure
+## 📁 Folder Structure
 
-```
-DR_AGENT/
-├── main.py              # Command-line runner
-├── agent.py             # Core logic to query Gemini
-├── prompts.py           # Prompt template for Gemini
-├── schema.py            # Pydantic model for profile validation
-├── test_main.py         # Pytest validation script
-├── streamlit_app.py     # Streamlit UI to run in browser
-├── requirements.txt     # Dependencies
-├── .env                 # Store API keys and config
-```
-(exp.ipynb) #Notebook
+dr_agent/
+├── .env # Gemini API Key
+├── agent.py # Core Gemini logic
+├── cache/
+│ └── ddg_cache.json # Cached profile links + scraped content
+├── enrichment.py # Builds enrichment context from content
+├── evaluation.py # Calculates keyword coverage
+├── main.py # CLI entry point
+├── prompts.py # Gemini prompt builder
+├── requirements.txt
+├── schema.py # Profile data model (Pydantic)
+├── scraper.py # DDG search and content simulation
+├── streamlit_app.py # Streamlit interface
+├── test_main.py # Profile test validation
+├── utils.py # Cache I/O
+└── validation.py # Input validation logic
+
+
 ---
 
-## 🚀 How to Run
+## 🛠️ Installation
 
-### 1. Create and activate virtual environment
 ```bash
+git clone https://github.com/FathimaHusna/DR_Agent
+cd dr_agent
+
+# Create virtual environment
 python -m venv dr_env
-source dr_env/bin/activate  # On Windows: dr_env\Scripts\activate
-```
+source dr_env/bin/activate  # On Windows: venv\Scripts\activate
 
-### 2. Install dependencies
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-### 3. Add your Google Gemini API key to `.env`
-```
-GEMINI_API_KEY=your_api_key_here
-```
+🚀 How to Run
 
-### 4. Run via Streamlit
-```bash
+CLI
+python main.py
+
+Streamlit App
 streamlit run streamlit_app.py
-```
 
----
+🔎 How It Works
 
-## 🧪 Testing
+    User Input: You provide role, skills, experience, tone, rate.
 
-```bash
+    Scraper: Uses DuckDuckGo to find Upwork profiles. Scraped data is cached.
+
+    Enrichment: Extracts real keywords from scraped content (no hardcoded terms).
+
+    Gemini AI: Generates JSON-formatted profile (title, overview, skills, rate, tips).
+
+    Evaluation: Compares profile content with keywords to compute match and coverage.
+
+    UI: Shows profile and performance in Streamlit.
+
+
+    ✅ Sample Output
+
+    ## 📸 Screenshots
+### 🔧 Streamlit UI – Main Page
+![Main Page](ss1_p2.png)
+
+### ✅ Generated Profile Output
+![Profile Output](ss2_p2.png)
+
+
+    
+   
+
+
+🧪 Testing
 pytest test_main.py
-```
 
----
+🧠 What's Next (Phase 3 Ideas)
 
-## ✅ Output Format
+    ✅ Real browser-based scraping using Playwright (with CAPTCHA handling)
 
-Returns a validated JSON Upwork profile:
-```json
-{
-  "title": "Experienced Python Developer | Selenium Expert",
-  "overview": "...",
-  "skills": [...],
-  "hourly_rate": "$15/hr",
-  "profile_tips": [...]
-}
-```
+    🔗 Integration with LangChain + Tavily for deeper research
 
-## 📸 Streamlit Output Example
+    💾 Export profiles as PDF or copy to clipboard
 
-![Streamlit Screenshot](ss1.png)
-![Streamlit Screenshot](ss2.png)
+    🌍 Public deployment of Streamlit frontend
 
----
+👨‍💻 Author
 
-## 📌 Notes
+Built by Husna
+Project: Deep Research Agent (Upwork Profile Generator)
 
-- Uses **Pydantic** to validate and clean model output
-- Uses **Streamlit** for interactive browser UI
-- Output is consumable for further use (e.g., profile auto-filling bots)
 
----
 
-## 📫 Author
-
-Built with ❤️ by Husna
+    

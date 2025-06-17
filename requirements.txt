@@ -2,3 +2,5 @@ google-generativeai
 pydantic
 python-dotenv
 pytest
+streamlit
+duckduckgo_search

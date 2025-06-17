@@ -1,23 +1,36 @@
+# --- FILE: test_main.py ---
 import json
-from schema import UpworkProfile
-from agent import run_profile_agent
-
 import re
+from agent import run_profile_agent
+from schema import UpworkProfile
+from evaluation import evaluate_quality
 
 def extract_json(text):
-    """Extract JSON block from LLM output."""
     match = re.search(r"\{.*\}", text, re.DOTALL)
     return match.group(0) if match else None
 
-def test_valid_json_response():
-    output = run_profile_agent("Python Developer", "2 years", ["Selenium"], "$15/hr", "Friendly")
-    cleaned_output = extract_json(output)
-    assert cleaned_output, "❌ No JSON object found in output."
+def test_generated_profile_is_valid():
+    user_input = {
+        "role": "Web Developer",
+        "experience": "3 years",
+        "skills": ["React", "Tailwind", "Firebase"],
+        "rate": "$25/hr",
+        "tone": "Professional"
+    }
 
-    parsed = json.loads(cleaned_output)
-    profile = UpworkProfile(**parsed)
+    output = run_profile_agent(**user_input)
+    json_text = extract_json(output)
+    assert json_text is not None, "❌ Failed to extract JSON from output."
 
+    data = json.loads(json_text)
+    profile = UpworkProfile(**data)
+    
     assert profile.title
+    assert profile.overview
     assert isinstance(profile.skills, list)
     assert profile.hourly_rate.endswith("/hr")
+    assert len(profile.profile_tips) >= 3
 
+    evaluation = evaluate_quality(profile, user_input["skills"])
+    print("✅ Matched:", evaluation["matched_keywords"])
+    print("✅ Coverage:", round(evaluation["coverage"] * 100, 2), "%")

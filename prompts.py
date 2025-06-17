@@ -1,18 +1,23 @@
-def build_prompt(role, experience, skills, rate, tone):
-    return f"""
-You are an expert Upwork freelancer.
+def build_prompt(user_input, enrichment):
+    return f'''
+Act as a professional Upwork profile writer.
+Generate a JSON profile using the following input:
 
-Create a professional Upwork profile for a {role} with {experience} of experience.
-Mention the following core skills: {', '.join(skills)}.
-The hourly rate must be included as a string like "{rate}" with a "$" symbol and "/hr".
-Write the profile in a {tone.lower()} tone.
+Role: {user_input['role']}
+Skills: {', '.join(user_input['skills'])}
+Experience: {user_input['experience']}
+Hourly Rate: {user_input['rate']}
+Tone: {user_input['tone']}
 
-Return ONLY a JSON object with these fields:
+Enrichment context:
+{enrichment}
+
+Return ONLY a valid JSON object with:
 - title (string)
 - overview (string)
 - skills (list of strings)
-- hourly_rate (string formatted like "$15/hr")
+- hourly_rate (string)
 - profile_tips (list of 3–5 strings)
 
-Respond with valid JSON only. No markdown, no explanations.
-"""
+No markdown. No explanations.
+'''

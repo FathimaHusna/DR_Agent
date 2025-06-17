@@ -1,55 +1,44 @@
 import streamlit as st
-import json
-import re
 from agent import run_profile_agent
+from validation import validate_inputs
+import json, re
 from schema import UpworkProfile
+from evaluation import evaluate_quality
 
 def extract_json(text):
-    """Extracts the first valid JSON block from the model output."""
     match = re.search(r"\{.*\}", text, re.DOTALL)
     return match.group(0) if match else None
 
-# Page Title
-st.set_page_config(page_title="Upwork Profile Generator", layout="centered")
-st.title("🔍 Deep Research Agent — Upwork Profile Generator")
+st.title("🔧 AI Upwork Profile Generator")
 
-# Input Fields
 role = st.text_input("Role", "Python Developer")
 experience = st.text_input("Experience", "2 years")
-skills_input = st.text_input("Skills (comma-separated)", "Selenium, Web Scraping, Automation")
-rate = st.text_input("Hourly Rate", "$15/hr")
-tone = st.selectbox("Tone", ["Professional", "Friendly", "Casual", "Concise"], index=0)
+skills = st.text_input("Skills (comma separated)", "Django, Flask, REST API")
+rate = st.text_input("Hourly Rate", "$20/hr")
+tone = st.selectbox("Tone", ["Professional", "Friendly", "Direct", "Inspiring"])
 
-# When Button Clicked
-if st.button("✨ Generate My Upwork Profile"):
-    skills = [s.strip() for s in skills_input.split(",") if s.strip()]
-    raw_output = run_profile_agent(role, experience, skills, rate, tone)
+if st.button("Generate Profile"):
+    skills_list = [s.strip() for s in skills.split(",") if s.strip()]
+    errors = validate_inputs(role, experience, skills_list, rate, tone)
 
-    st.subheader("🧠 LLM Output")
-    st.code(raw_output, language="json")
+    if errors:
+        for err in errors:
+            st.error(f"⚠️ {err}")
+    else:
+        with st.spinner("Generating..."):
+            output = run_profile_agent(role, experience, skills_list, rate, tone)
+            json_text = extract_json(output)
 
-    cleaned_output = extract_json(raw_output)
+            if json_text:
+                parsed = json.loads(json_text)
+                st.subheader("✅ Generated Profile")
+                st.json(parsed)
 
-    if not cleaned_output:
-        st.error("❌ No valid JSON found in the response. Please try different inputs.")
-        st.stop()
+                profile = UpworkProfile(**parsed)
+                evaluation = evaluate_quality(profile, skills_list)
 
-    try:
-        parsed = json.loads(cleaned_output)
-
-        # Auto-fix hourly_rate formatting if needed
-        if isinstance(parsed.get("hourly_rate"), (int, float)):
-            parsed["hourly_rate"] = f"${parsed['hourly_rate']}/hr"
-
-        # Validate with schema
-        profile = UpworkProfile(**parsed)
-
-        st.success("✅ Success! Here's your optimized profile:")
-        st.json(profile.model_dump())
-
-        # Downloadable JSON
-        st.download_button("⬇️ Download JSON", json.dumps(profile.model_dump(), indent=2), file_name="upwork_profile.json")
-
-    except Exception as e:
-        st.error(f"❌ Validation Error: {e}")
-        st.text_area("🔍 Raw JSON for Debugging", value=cleaned_output, height=200)
+                st.subheader("📊 Keyword Evaluation")
+                st.write(f"Matched Keywords: {evaluation['matched_keywords']}")
+                st.write(f"Coverage: {evaluation['coverage'] * 100:.2f}%")
+            else:
+                st.error("❌ Failed to extract valid profile output.")
