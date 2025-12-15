@@ -19,6 +19,9 @@ This project generates high-quality, enriched Upwork freelancer profiles using r
 
 ---
 
+## 🚀 Live Demo
+[Click here to view the Live Demo](https://dragent-jc7bc5vwnwwkj7ueexz8g3.streamlit.app/)
+
 ## 🛠️ Installation
 
 ```bash
@@ -31,14 +34,19 @@ source dr_env/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
+```
 
-🚀 How to Run
+## 🚀 How to Run
 
-CLI
+### CLI
+```bash
 python main.py
+```
 
-Streamlit App
+### Streamlit App
+```bash
 streamlit run streamlit_app.py
+```
 
 🔎 How It Works
 

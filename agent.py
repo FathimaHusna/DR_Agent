@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("models/gemini-1.5-flash-latest")
+model = genai.GenerativeModel("gemini-2.0-flash")
 
 def run_profile_agent(role, experience, skills, rate, tone):
     urls, content = get_cached_or_fetch_profiles(role)
